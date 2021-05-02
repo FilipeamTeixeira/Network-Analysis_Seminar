@@ -1,6 +1,11 @@
 # Network Analysis Seminar - FLAMES
 # 3rd May 2021
 
+#### Install Packages ####
+
+install.packages(c("data.table", "tidyverse", "igraph",
+                   "igraphdata", "visNetwork", "ggraph"))
+
 #### Load packages and data ####
 library(data.table)
 library(tidyverse)
