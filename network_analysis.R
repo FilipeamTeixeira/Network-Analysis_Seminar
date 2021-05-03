@@ -20,20 +20,33 @@ infect <- infect %>%
   graph_from_data_frame(direct = TRUE)
 
 # Add degree as label
-infect <- set_vertex_attr(infect, "degree", index = V(infect),
+infect_deg <- set_vertex_attr(infect, "degree", index = V(infect),
                           degree(infect))
 
 # Add eigenvector as label
-infect <- set_vertex_attr(infect, "eigenvector", index = V(infect),
+infect_eg <- set_vertex_attr(infect, "eigenvector", index = V(infect),
                           eigen_centrality(infect)$vector)
 
-quantile(V(infect)$degree)
+# Plot degree
+quantile(V(infect_deg)$degree)
+g_deg <- subgraph.edges(infect_deg, V(infect_deg)[degree>500])
+plot(g_deg, edge.arrow.size=.2,
+     vertex.size = sqrt(V(g_deg)$degree/100)*4)
 
-plot(subgraph.edges(infect, V(infect)[degree>500]),
-     edge.arrow.size=.2,vertex.label=NA, vertex.size = sqrt(V(infect)$degree/100)*4)
+max_g <- induced_subgraph(g_deg, V(g_deg)[degree == max(V(g_deg)$degree)])
+plot(max_g)
 
-plot(subgraph.edges(infect, V(infect)[degree<100]),
-     edge.arrow.size=.2,vertex.label=NA, vertex.size = sqrt(V(infect)$degree)/2)
+
+# Plot eigenvector
+g_eg <- subgraph.edges(infect_eg, V(infect_eg)[eigenvector<100])
+plot(g_eg, edge.arrow.size=.2,vertex.size = sqrt(V(g_eg)$eigenvector*1000))
+
+max_g <- induced_subgraph(g_eg, V(g_eg)[eigenvector == max(V(g_eg)$eigenvector)])
+plot(max_g)
+
+
+
+#### News dataset ####
 
 # Loading and cleaning data
 edges <- fread("data/edges.csv")
