@@ -82,13 +82,18 @@ deg <- degree(g, mode="all")
 plot(g, vertex.size=deg*3,
      vertex.label=V(g)$media, edge.arrow.size=.2, vertex.label.cex=.7)
 
+eig <- eigen_centrality(g)$vector
+
+plot(g, vertex.size=eig*25,
+     vertex.label=V(g)$media, edge.arrow.size=.2, vertex.label.cex=.7)
+
 #par(mar = c(0,0,0,0))
 
 # Plot using ggraph
 ggraph(g, layout = "fr") +
   geom_edge_fan(color = "#1DACE8", alpha = .5) +
   geom_node_point(aes(size = deg), color = "#1DACE8", show.legend = FALSE) +
-  geom_node_text(aes(label = name, size = deg)) +
+  geom_node_text(aes(label = media, size = deg)) +
   theme_graph(fg_text_colour = 'white')
 
 # NOTE:
