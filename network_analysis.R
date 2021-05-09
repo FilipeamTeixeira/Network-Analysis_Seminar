@@ -29,6 +29,7 @@ infect_eg <- set_vertex_attr(infect, "eigenvector", index = V(infect),
 
 # Plot degree
 quantile(V(infect_deg)$degree)
+
 g_deg <- subgraph.edges(infect_deg, V(infect_deg)[degree>500])
 plot(g_deg, edge.arrow.size=.2,
      vertex.size = sqrt(V(g_deg)$degree/100)*4)
@@ -90,7 +91,7 @@ plot(g, vertex.size=eig*25,
 #par(mar = c(0,0,0,0))
 
 # Plot using ggraph
-ggraph(g, layout = "fr") +
+ggraph(g, layout = "grid") +
   geom_edge_fan(color = "#1DACE8", alpha = .5) +
   geom_node_point(aes(size = deg), color = "#1DACE8", show.legend = FALSE) +
   geom_node_text(aes(label = media, size = deg)) +
